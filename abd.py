@@ -4,7 +4,7 @@ import numpy
 # and https://publications.lib.chalmers.se/records/fulltext/253622/253622.pdf
 # Threshold init 
 dmax = 0
-# This is the worst case incidence angle for the sensor (AKA the angle with the surface)
+# This is the worst case incidence angle for the sensor (AKA the angle of the lidar sensor with the surface)
 lamb = 16
 # Inital values
 standard_deviation = 1
@@ -17,13 +17,14 @@ segments = []
 def abd(point_cloud):
     for point in point_cloud:
         distances.append(point[1])
+    global standard_deviation
     standard_deviation = numpy.std(distances)
     current_segment = 0
     # Put the very first value into segments
-    segment[0] = point_cloud[0]
+    segments[0] = point_cloud[0]
     for i in range(len(point_cloud) - 1):
         dmax = calc_dmax(point_cloud[i], point_cloud[i+1])
-        distance_between_points = sqrt(((point_cloud[i+1][0] - point_cloud[i][0]) ** 2) + ((point_cloud[i+1][1] - point_cloud[i][1]) **2))
+        distance_between_points = numpy.sqrt(((point_cloud[i+1][0] - point_cloud[i][0]) ** 2) + ((point_cloud[i+1][1] - point_cloud[i][1]) **2))
         if distance_between_points > dmax:
             current_segment += 1
         segments[current_segment].append(point_cloud[i+1])
