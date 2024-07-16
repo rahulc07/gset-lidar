@@ -27,6 +27,7 @@ def abd(point_cloud):
         if distance_between_points > dmax:
             current_segment += 1
         segments[current_segment].append(point_cloud[i+1])
+    return segments
 
 def calc_dmax(point1, point2):
     angle_difference = point2[1] - point1[1]
