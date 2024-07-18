@@ -62,3 +62,21 @@ def plot_convex_hull_and_point_cloud(hull, points):
     ax.set_zlabel('z')
 
     plt.show()
+
+
+def plot_point_cloud(points):
+    points = np.array(points)  # Convert the list to a NumPy array for plotting
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection="3d")
+
+    # Plot the entire point cloud
+    ax.scatter(points.T[0], points.T[1], points.T[2],
+               c="blue", marker="o", alpha=0.5)
+
+    # Set axis labels
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+
+    plt.show()
