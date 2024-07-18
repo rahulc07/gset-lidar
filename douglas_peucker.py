@@ -2,30 +2,32 @@ import numpy as np
 import math
 import rdp
 
+gradient_threshold = .75
 
 def dp(segments):
     epsilon = 0.75
     for i in range(len(segments) - 1):
         simplified_points = rdp.rdp(segments[i], epsilon)
-        print("Simplified Points:\n", simplified_points)
+        #print("Simplified Points:\n", simplified_points)
+        return simplified_points
+
+def clean_data(segments):
+    for i in range (len(segments) -1):
+        if len(segments[i]) > 2:
+            segments.pop(i)
 
 
-def calculate_gradient(points):
-    gradients = []
-    for i in range(len(points) - 1):
-        dx = points[i + 1][0] - points[i][0]
-        dy = points[i + 1][1] - points[i][1]
-        gradient = dy / dx if dx != 0 else np.inf
-        gradients.append(gradient)
-    return gradients
+def calculate_slope(segment):
+    for point in range(1,len(segment)-1):
+         slope =  (segment[point][1] - segment[point-1][1])/(segment[point][0] - segment[point-1][0])
+         return slope
+
+def check_pothole(simplified_segments):
+    clean = clean_data(simplified_segments)
+    for segment in range(1, len(clean)-1):
+        diff = np.abs(calculate_slope(clean[segment]) - calculate_slope(clean[segment-1]))
+        if diff >= gradient_threshold:
+            print("POTHOLE")
+    
 
 
-def detect_potholes(segments, gradient_threshold=0.5):
-    potholes = []
-    simplified_segments = dp(segments)
-    for segment in simplified_segments:
-        gradients = calculate_gradient(segment)
-        for i, gradient in enumerate(gradients):
-            if i > 0 and abs(gradients[i] - gradients[i - 1]) > gradient_threshold:
-                potholes.append(segment[i])
-    return potholes
