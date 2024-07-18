@@ -5,7 +5,7 @@ import numpy
 # Threshold init 
 dmax = 0
 # This is the worst case incidence angle for the sensor (AKA the angle of the lidar sensor with the surface)
-lamb = 45
+lamb = 50
 # Inital values
 standard_deviation = 1
 distances = []

@@ -24,19 +24,21 @@ try:
 
     #print(lidar.info)
     for scan in lidar.iter_scans():
+        point_cloud=[]
         # This will go out of scope after every scan
-        point_cloud = []
         for point in range(len(scan)):
             # TALK ABOUT CLENAING DATA
             if (scan[point][2] < 300):
                 #print(scan[point][2])
-                if not (scan[point][1] > 20 and scan[point][1] < 300):
+                if not (scan[point][1] > 20 and scan[point][1] < 500):
                     point_cloud.append([scan[point][1], scan[point][2]])
         if len(point_cloud) >= 1:
             #print(len(abd.abd(point_cloud)))
             lines = dp(abd.abd(point_cloud))
-            if (check_pothole(lines)):
-                print(convex_hull_volume(convert_to_3d(point_cloud)))
+            if (counter % 3) == 0:
+                if (check_pothole(lines)):
+                    print(convex_hull_volume(convert_to_3d(point_cloud)))
+            counter+=1
             
         
     

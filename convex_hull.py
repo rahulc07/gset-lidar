@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 def convex_hull_volume(three_d_point_cloud):
     hull = scipy.spatial.ConvexHull(three_d_point_cloud)
     volume = hull.volume
+    print(volume)
     plot_convex_hull(hull)
 
 
@@ -35,32 +36,22 @@ def plot_convex_hull(hull):
 
     plt.show()
 
-
-def plot_convex_hull_and_point_cloud(hull, points):
-    points = np.array(points)  # Convert the list to a NumPy array for plotting
+def plot_3d_point_cloud(points):
+    if not all(len(point) == 3 for point in points):
+        raise ValueError("All points must have 3 coordinates (x, y, z)")
 
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection="3d")
-
-    # Plot the entire point cloud
-    ax.plot(points.T[0], points.T[1], points.T[2], "bo",
-            alpha=0.5)  # Blue points with some transparency
-
-    # Plot defining corner points of the convex hull
-    ax.plot(hull.points.T[0], hull.points.T[1], hull.points.T[2], "ko")
-
-    # Plot the simplices (lines) of the convex hull
-    for simplex in hull.simplices:
-        # Cycle back to the first coordinate
-        simplex = np.append(simplex, simplex[0])
-        ax.plot(hull.points[simplex, 0], hull.points[simplex,
-                1], hull.points[simplex, 2], "r-")
-
-    # Set axis labels
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.set_zlabel('z')
-
+    ax = fig.add_subplot(111, projection='3d')
+    
+    xs, ys, zs = zip(*points)
+    
+    ax.scatter(xs, ys, zs)
+    
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.set_title('3D Point Cloud')
+    
     plt.show()
 
 
