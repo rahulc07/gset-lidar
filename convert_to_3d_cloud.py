@@ -13,8 +13,8 @@ def convert_to_3d(point_cloud):
         rotation_angle = point[0]
         distance = point[1]
         # If this math works I am him - Rahul
-        y = distance * np.cos(abd.lamb) * np.cos(rotation_angle)
-        x = distance * np.cos(abd.lamb) * np.sin(rotation_angle)
-        z = distance * np.sin(abd.lamb)
+        y = float(distance * np.cos(abd.lamb) * np.cos(rotation_angle))
+        x = float(distance * np.cos(abd.lamb) * np.sin(rotation_angle))
+        z = float(distance * np.sin(abd.lamb))
         three_dimensional_point_cloud.append([x, y, z])
-        return three_dimensional_point_cloud
+    return three_dimensional_point_cloud

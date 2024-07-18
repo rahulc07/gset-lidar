@@ -5,6 +5,7 @@ from math import floor
 from adafruit_rplidar import RPLidar
 
 from convert_to_3d_cloud import convert_to_3d
+from convex_hull import convex_hull_volume
 from douglas_peucker import  dp, check_pothole
 
 
@@ -34,7 +35,7 @@ try:
             #print(len(abd.abd(point_cloud)))
             lines = dp(abd.abd(point_cloud))
             if (check_pothole(lines)):
-                print(convert_to_3d(point_cloud))
+                print(convex_hull_volume(convert_to_3d(point_cloud)))
             
         
     
