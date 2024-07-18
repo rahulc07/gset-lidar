@@ -29,6 +29,9 @@ def abd(point_cloud):
         dmax = calc_dmax(point_cloud[i], point_cloud[i+1])
         distance_between_points = numpy.sqrt(((point_cloud[i+1][0] - point_cloud[i][0]) ** 2) + ((point_cloud[i+1][1] - point_cloud[i][1]) **2))
         if distance_between_points > dmax:
+            if len(segments[current_segment]) < 2:
+                segments.pop(current_segment)
+                current_segment -= 1
             current_segment += 1
             segments.append([])
         segments[current_segment].append(point_cloud[i+1])

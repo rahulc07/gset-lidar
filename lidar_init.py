@@ -4,7 +4,7 @@ import abd
 from math import floor
 from adafruit_rplidar import RPLidar
 
-from douglas_peucker import check_pothole, dp
+from douglas_peucker import  dp, check_pothole
 
 
 # Setup the RPLidar
