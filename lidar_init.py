@@ -4,6 +4,7 @@ import abd
 from math import floor
 from adafruit_rplidar import RPLidar
 
+from convert_to_3d_cloud import convert_to_3d
 from douglas_peucker import  dp, check_pothole
 
 
@@ -31,7 +32,10 @@ try:
                     point_cloud.append([scan[point][1], scan[point][2]])
         if len(point_cloud) >= 1:
             #print(len(abd.abd(point_cloud)))
-            dp(abd.abd(point_cloud))
+            lines = dp(abd.abd(point_cloud))
+            if (check_pothole(lines)):
+                print(convert_to_3d(point_cloud))
+            
         
     
 except KeyboardInterrupt:
