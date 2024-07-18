@@ -31,7 +31,7 @@ try:
                     point_cloud.append([scan[point][1], scan[point][2]])
         if len(point_cloud) >= 1:
             #print(len(abd.abd(point_cloud)))
-            print(check_pothole(dp(abd.abd(point_cloud))))
+            dp(abd.abd(point_cloud))
         
     
 except KeyboardInterrupt:
