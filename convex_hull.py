@@ -1,3 +1,4 @@
+# %%
 from time import sleep
 import scipy
 import numpy as np
@@ -5,22 +6,29 @@ import matplotlib.pyplot as plt
 def convex_hull_volume(three_d_point_cloud):
     hull = scipy.spatial.ConvexHull(three_d_point_cloud)
     volume = hull.volume
-    convex_hull_plot(hull, three_d_point_cloud)
-def convex_hull_plot(hull, pts):
+    plot_convex_hull(hull)
+def plot_convex_hull(hull):
+    """
+    Plots a convex hull object.
 
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection="3d")
+    Parameters:
+    hull (scipy.spatial.ConvexHull): The convex hull object to plot.
 
-    # Plot defining corner points
-    ax.plot(pts.T[0], pts.T[1], pts.T[2], "ko")
+    """
+    if not isinstance(hull, scipy.spatial.ConvexHull):
+        raise ValueError("The input must be a scipy.spatial.ConvexHull object")
 
-    # 12 = 2 * 6 faces are the simplices (2 simplices per square face)
-    for s in hull.simplices:
-        s = np.append(s, s[0])  # Here we cycle back to the first coordinate
-        ax.plot(pts[s, 0], pts[s, 1], pts[s, 2], "r-")
+    plt.figure()
+    plt.plot(hull.points[:, 0], hull.points[:, 1], 'o', markersize=5, label='Points')
+    
+    for simplex in hull.simplices:
+        plt.plot(hull.points[simplex, 0], hull.points[simplex, 1], 'k-')
 
-    # Make axis label
-    for i in ["x", "y", "z"]:
-        eval("ax.set_{:s}label('{:s}')".format(i, i))
-
+    plt.plot(hull.points[hull.vertices, 0], hull.points[hull.vertices, 1], 'r--', lw=2, label='Convex Hull')
+    plt.fill(hull.points[hull.vertices, 0], hull.points[hull.vertices, 1], 'c', alpha=0.3)
+    
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title('Convex Hull')
+    plt.legend()
     plt.show()
