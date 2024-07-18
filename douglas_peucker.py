@@ -3,18 +3,25 @@ import math
 import rdp
 
 gradient_threshold = .75
-
+episolon = .75
 def dp(segments):
-    epsilon = 0.75
-    for i in range(len(segments) - 1):
-        simplified_points = rdp.rdp(segments[i], epsilon)
-        #print("Simplified Points:\n", simplified_points)
-        return simplified_points
+    print(len(segments))
+    new_segs = []
+    for i in range(len(segments)):
+        simp = rdp.rdp(segments[i], episolon)
+        new_segs.append(simp)
+    print(new_segs)
+    return new_segs
+    
+
+
+
 
 def clean_data(segments):
     for i in range (len(segments) -1):
-        if len(segments[i]) > 2:
+        if len(segments[i]) < 2:
             segments.pop(i)
+    return segments
 
 
 def calculate_slope(segment):
