@@ -17,4 +17,18 @@ def convert_to_3d(point_cloud):
         x = float(distance * np.cos(abd.lamb) * np.sin(rotation_angle))
         z = float(distance * np.sin(abd.lamb))
         three_dimensional_point_cloud.append([x, y, z])
-    return three_dimensional_point_cloud
+    z_min = find_z_min(three_dimensional_point_cloud)
+    new_three_dimensional_point_cloud  = []
+    for i in range(len(three_dimensional_point_cloud)):
+        if (three_dimensional_point_cloud[i][2] - z_min) > 3:
+            three_dimensional_point_cloud[i][2] -= z_min
+            new_three_dimensional_point_cloud.append(three_dimensional_point_cloud[i])
+    return new_three_dimensional_point_cloud 
+
+def find_z_min(three_dimensional_point_cloud):
+    current_min = 10000
+    for point in three_dimensional_point_cloud:
+        if point[2] < current_min:
+            current_min = point[2]
+    return current_min
+
