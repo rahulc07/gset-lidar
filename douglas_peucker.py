@@ -11,10 +11,11 @@ def dp(complex_segments):
 def calculate_slope(segment):
     return (segment[-1][1] - segment[0][1]) / (segment[-1][0] - segment[0][0])
 def check_pothole(simplified_segments):
+    print(simplified_segments)
     for segment in range(1, len(simplified_segments)-1):
-        diff = np.abs(calculate_slope(simplified_segments[segment]) - (calculate_slope(simplified_segments[segment-1])))
+        diff = np.abs(calculate_slope(simplified_segments[segment])) - np.abs(calculate_slope(simplified_segments[segment-1]))
         print(f'Difference: {diff}')
-        if diff >= .75:
+        if diff >= 1:
             print("Pothole")
             return True
 

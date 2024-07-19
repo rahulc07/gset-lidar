@@ -16,10 +16,11 @@ segments = []
 def abd(point_cloud):
     distances = []
     segments = []
+    
     for point in point_cloud:
         distances.append(point[1])
     standard_deviation = numpy.std(distances)
-    print(standard_deviation)
+    #print(standard_deviation)
     current_segment = 0
     # Put the very first value into segments
     segments.append([])
@@ -34,12 +35,14 @@ def abd(point_cloud):
             current_segment += 1
             segments.append([])
         segments[current_segment].append(point_cloud[i+1])
+    #print(segments)
     return segments
 
 def calc_dmax(point1, point2, standard_deviation):
     angle_difference = point2[1] - point1[1]
     # Page 32/96 of the second paper
-    dmax = point1[0] * (numpy.sin(angle_difference)/numpy.sin(lamb - angle_difference)) + (3 * standard_deviation)
+    dmax = numpy.abs(point1[0] * (numpy.sin(angle_difference)/numpy.sin(lamb - angle_difference)) + (3 * standard_deviation))
+    #print(dmax)
     return dmax
 
 

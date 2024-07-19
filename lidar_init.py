@@ -29,10 +29,10 @@ try:
         for point in range(len(scan)):
             # TALK ABOUT CLENAING DATA
             if (scan[point][2] < 700):
-                print(scan[point])
-                if not (scan[point][1] > 45) or not (scan[point][1] < 315):
+                #print(scan[point])
+                if (scan[point][1] < 45) or (scan[point][1] > 315):
                     point_cloud.append([scan[point][1], scan[point][2]])
-        print(point_cloud)
+        #print(point_cloud)
         if len(point_cloud) >= 1:
             print(len(abd.abd(point_cloud)))
             lines = dp(abd.abd(point_cloud))
