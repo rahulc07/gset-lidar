@@ -34,10 +34,11 @@ try:
                     point_cloud.append([scan[point][1], scan[point][2]])
         #print(point_cloud)
         if len(point_cloud) >= 1:
-            print(len(abd.abd(point_cloud)))
+            #print(len(abd.abd(point_cloud)))
             lines = dp(abd.abd(point_cloud))
             if (check_pothole(lines)):
-                print(convex_hull_volume(convert_to_3d(point_cloud)))
+                #print(convex_hull_volume(convert_to_3d(point_cloud)))
+                print("POTHOLE")
             
         
     

@@ -13,6 +13,7 @@ def convert_to_3d(point_cloud):
         rotation_angle = point[0]
         distance = point[1]
         # If this math works I am him - Rahul
+        lamb_radians = abd.lamb * .0174
         x = float(distance * np.cos(abd.lamb) * np.cos(rotation_angle))
         y = float(distance * np.cos(abd.lamb) * np.sin(rotation_angle))
         z = float(distance * np.sin(abd.lamb))
