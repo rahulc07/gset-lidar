@@ -12,36 +12,40 @@ from douglas_peucker import  dp, check_pothole
 
 # Setup the RPLidar
 PORT_NAME = '/dev/ttyUSB1'
-lidar = RPLidar(None, PORT_NAME, timeout=3)
+lidar = RPLidar(None, PORT_NAME, timeout=3, baudrate=100000)
 
 # used to scale data to fit on the screen
 max_distance = 0
 
 scan_data = [0]*360
 lidar.set_pwm(255)
-counter = 0
+counter = 1
+joined_point_cloud=[]
 try:
+    print(lidar.info)
 
-    #print(lidar.info)
     point_cloud=[]
     for scan in lidar.iter_scans():
         print("GOOOO")
-        # This will go out of scope after every scan
+        # Clean/Filter the data
         for point in range(len(scan)):
-            # TALK ABOUT CLENAING DATA
-            if (scan[point][2] < 1000):
-                #print(scan[point])
-                if (scan[point][1] < 45) or (scan[point][1] > 315):
-                    point_cloud.append([scan[point][1], scan[point][2]])
+            if (scan[point][2] < 1000) and ((scan[point][1] < 45) or (scan[point][1] > 315)):
+                point_cloud.append([scan[point][1], scan[point][2]])
         #print(point_cloud)
         if len(point_cloud) >= 1:
-            #print(len(abd.abd(point_cloud)))
-            if (counter % 40):
-                lines = dp(abd.abd(point_cloud))
-                if (check_pothole(lines)):
-                    print(convex_hull_volume(convert_to_3d(point_cloud)))
-                    print("POTHOLE")
+            lines = dp(abd.abd(point_cloud))
+            #check_pothole(lines)
+            if counter % 10 == 0:
+                if check_pothole(lines):
+                    print(convex_hull_volume(convert_to_3d(joined_point_cloud)))
+                lidar.stop()
+                lidar.disconnect()
+                sys.exit()
+            else:
+                print(counter)
+                joined_point_cloud = joined_point_cloud + point_cloud  
             counter+=1
+
             
         
     

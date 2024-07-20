@@ -19,8 +19,8 @@ def abd(point_cloud):
     
     for point in point_cloud:
         distances.append(point[1])
-    #standard_deviation = numpy.std(distances)
-    standard_deviation = 1
+    standard_deviation = numpy.std(distances)
+    #standard_deviation = 1
     #print(standard_deviation)
     current_segment = 0
     # Put the very first value into segments
