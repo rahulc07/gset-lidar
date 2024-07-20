@@ -3,11 +3,12 @@ import numpy as np
 
 # Convert the 2D Point Cloud to 3D to make a convex hull
 
-# x is forward and backwards FROM THE SENSOR
-# y is left and right
+# x is fleft right
+# y is forward backward
 # z is depth
 
 def convert_to_3d(point_cloud):
+    print(point_cloud)
     three_dimensional_point_cloud = []
     for point in point_cloud:
         rotation_angle = point[0]

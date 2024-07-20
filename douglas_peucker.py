@@ -6,7 +6,7 @@ def dp(complex_segments):
     # Douglas Pecker Line Extraction
     simplified_segments = []
     for segment in complex_segments:
-        simplified_segments.append(rdp.rdp(segment, epsilon=0.75))
+        simplified_segments.append(rdp.rdp(segment, epsilon=1))
     return simplified_segments
 def calculate_slope(segment):
     return (segment[-1][1] - segment[0][1]) / (segment[-1][0] - segment[0][0])
