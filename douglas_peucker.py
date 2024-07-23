@@ -1,3 +1,4 @@
+# douglas_peucker.py
 import numpy as np
 import math
 import rdp
@@ -17,7 +18,7 @@ def check_pothole(simplified_segments):
     for segment in range(1, len(simplified_segments)-1):
         diff = np.abs(np.abs(calculate_slope(simplified_segments[segment])) - np.abs(calculate_slope(simplified_segments[segment-1])))
         print(f'Difference: {diff}')
-        if diff >= 2.5:
+        if diff >= 1:
             print("Pothole")
             return True
 

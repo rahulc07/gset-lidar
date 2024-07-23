@@ -11,7 +11,7 @@ from douglas_peucker import  dp, check_pothole
 
 
 # Setup the RPLidar
-PORT_NAME = '/dev/ttyUSB1'
+PORT_NAME = '/dev/ttyUSB0'
 lidar = RPLidar(None, PORT_NAME, timeout=3, baudrate=100000)
 
 # used to scale data to fit on the screen
@@ -29,7 +29,7 @@ try:
         print("GOOOO")
         # Clean/Filter the data
         for point in range(len(scan)):
-            if (scan[point][2] < 1000) and ((scan[point][1] < 45) or (scan[point][1] > 315)):
+            if (scan[point][2] < 1000) and ((scan[point][1] < 60) or (scan[point][1] > 300)):
                 point_cloud.append([scan[point][1], scan[point][2]])
         #print(point_cloud)
         if len(point_cloud) >= 1:

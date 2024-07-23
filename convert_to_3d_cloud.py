@@ -1,3 +1,4 @@
+# convert_to_3d_cloud.py
 import abd
 import numpy as np
 import scipy.stats
@@ -18,10 +19,8 @@ def convert_to_3d(point_cloud):
         rotation_angle_rads = rotation_angle *.0174
         y = float(distance * np.cos(lamb_radians) * np.cos(rotation_angle_rads))
         # pi / 2 rads = 1.57
-        if rotation_angle_rads > 3.14: 
-            x = float(distance * np.cos(lamb_radians) * np.sin(6.28 - rotation_angle_rads))
-        else:
-            x = float(distance * np.cos(lamb_radians))
+        x = float(distance * np.cos(lamb_radians)) * np.sin(rotation_angle_rads)
+        
         z = float(distance * np.sin(lamb_radians))
         three_dimensional_point_cloud.append([x, y, z])
     #print(three_dimensional_point_cloud)
@@ -42,8 +41,9 @@ def convert_to_3d(point_cloud):
             #three_dimensional_point_cloud[i][2] -= z_min
             new_three_dimensional_point_cloud.append(three_dimensional_point_cloud[i])
     #print(new_three_dimensional_point_cloud)
-    print(z_mean)
-    print(z_std)
+    #print(z_mean)
+    #print(z_std)
+    find_x(new_three_dimensional_point_cloud)
     return new_three_dimensional_point_cloud 
 
 def find_z_min(three_dimensional_point_cloud):
@@ -52,4 +52,13 @@ def find_z_min(three_dimensional_point_cloud):
         if point[2] < current_min:
             current_min = point[2]
     return current_min
+
+def find_x(three_dimensional_point_cloud):
+    z_max_index = 0
+    for point in range(len(three_dimensional_point_cloud)):
+        if three_dimensional_point_cloud[point][2] > three_dimensional_point_cloud[point][2]:
+            z_max_index = point
+    print(three_dimensional_point_cloud[z_max_index][0])
+    return three_dimensional_point_cloud[z_max_index][0]
+
 
